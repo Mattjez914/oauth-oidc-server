@@ -1,0 +1,16 @@
+{
+  "name": "auth-server",
+  "version": "1.0.0",
+  "description": "Hosts a Node.js OAuth 2.0 and OpenId Connect authorization server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mattjez914",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "oidc-provider": "^6.30.1"
+  }
+}
