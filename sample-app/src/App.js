@@ -20,8 +20,8 @@ const startAuth = (event) => {
       client_id: 'test_implicit_app',
       client_secret: 'bar',
       redirect_uri: 'https://alphanetrics.com/redirect',
-      response_type: 'id_token',
-      scope: 'openid profile',
+      // response_type: 'id_token',
+      // scope: 'openid profile',
       nonce: '123',
       state: '321'
     }
