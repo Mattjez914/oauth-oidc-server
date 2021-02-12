@@ -12,6 +12,7 @@ const configuration = {
     },
     clients: [{
         client_id: 'test_implicit_app',
+        client_secret: 'bar',
         grant_types: ['implicit'],
         response_types: ['id_token'],
         redirect_uris: ['https://alphanetrics.com/redirect'],
