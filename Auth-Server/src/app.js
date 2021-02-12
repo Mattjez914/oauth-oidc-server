@@ -2,7 +2,7 @@ const express = require('express');
 // const path = require('path');
 const	app	= express();
 
-app.use(require('cors')());
+// app.use(require('cors')());
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -10,6 +10,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.options('*', cors())
 
 const Provider = require('oidc-provider');
 
