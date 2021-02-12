@@ -2,15 +2,12 @@ const express = require('express');
 // const path = require('path');
 const	app	= express();
 
+app.use(require('cors')());
+
 const Provider = require('oidc-provider');
 
 const configuration = {
-  // claims: {
-  //     email: ['email', 'email_verified'],
-  //     phone: ['phone_number', 'phone_number_verified'],
-  //     profile: ['birthdate', 'family_name', 'gender', 'given_name', 'locale', 'middle_name', 'name', 'nickname', 'picture', 'preferred_username', 'profile', 'updated_at', 'website', 'zoneinfo']
-  // },
-// ... see the available options in Configuration options section
+
   features: {
     introspection: { enabled: true },
     revocation: { enabled: true },
@@ -26,7 +23,7 @@ const configuration = {
       redirect_uris: ['https://alphanetrics.com/redirect'],
       // + other client properties
   }],
-  scopes: ['api'],
+  // scopes: ['api'],
   async findById(ctx, id) {
       return {
           accountId: id,
@@ -37,7 +34,7 @@ const configuration = {
 
 const oidc = new Provider('http://localhost:3001', configuration);
 
-app.use(require('cors')());
+
 
 // app.use(express.static(path.join(__dirname, '..', '..', 'sample-app', 'build')));
 
