@@ -1,5 +1,5 @@
 const express = require('express');
-const path = require('path');
+// const path = require('path');
 const	app	= express();
 
 const Provider = require('oidc-provider');
@@ -28,7 +28,9 @@ const configuration = {
 
 const oidc = new Provider('http://localhost:3001', configuration);
 
-app.use(express.static(path.join(__dirname, '..', '..', 'sample-app', 'build')));
+app.use(require('cors')());
+
+// app.use(express.static(path.join(__dirname, '..', '..', 'sample-app', 'build')));
 
 app.get('/test', (req, res) => {
     res.send({message: 'This is a test change'})
@@ -37,8 +39,12 @@ app.get('/test', (req, res) => {
 app.use('/auth', oidc.callback);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', '..', 'sample-app', 'build', 'index.html'));
+    res.status(404).json({
+        message: '404 page not found...',
+      });
 });
+
+  
 
 
 

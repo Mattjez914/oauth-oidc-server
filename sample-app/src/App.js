@@ -15,7 +15,7 @@ const App = () => {
 }
 
 const startAuth = (event) => {
-  axios.get('https://api.alphanetrics/auth/auth', {
+  axios.get('https://api.alphanetrics.com/auth/auth', {
     params: {
       client_id: 'test_implicit_app',
       redirect_uri: 'https://alphanetrics.com/redirect',
@@ -25,11 +25,11 @@ const startAuth = (event) => {
       state: '321'
     }
   })
-  // .then((res) => {
-  //   console.log(res)
-  //   window.location.href= res.data.url
+  .then((res) => {
+    console.log(res)
+    window.location.href= res.data.url
 
-  // })
+  })
 }
 
 const AuthCallback = (props) => {
