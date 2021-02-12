@@ -15,7 +15,7 @@ const App = () => {
 }
 
 const startAuth = (event) => {
-  axios.get('http://192.168.0.26/auth/auth', {
+  axios.get('https://api.alphanetrics/auth/auth', {
     params: {
       client_id: 'test_implicit_app',
       redirect_uri: 'https://alphanetrics.com/redirect',
