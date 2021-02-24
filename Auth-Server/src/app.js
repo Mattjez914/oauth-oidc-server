@@ -5,7 +5,7 @@ const	app	= express();
 // app.use(require('cors')());
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "https://alphanetrics.com");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
@@ -26,8 +26,8 @@ const configuration = {
   clients: [{
       client_id: 'test_implicit_app',
       client_secret: 'bar',
-      // grant_types: ['implicit'],
-      // response_types: ['id_token'],
+      grant_types: ['implicit'],
+      response_types: ['id_token'],
       redirect_uris: ['https://alphanetrics.com/redirect'],
       // + other client properties
   }],

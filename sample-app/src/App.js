@@ -18,7 +18,6 @@ const startAuth = (event) => {
   axios.get('https://api.alphanetrics.com/auth/auth', {
     params: {
       client_id: 'test_implicit_app',
-      client_secret: 'bar',
       redirect_uri: 'https://alphanetrics.com/redirect',
       response_type: 'id_token',
       // scope: 'openid profile',
