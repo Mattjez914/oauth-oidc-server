@@ -10,7 +10,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.options('*', cors())
+// app.options('*', cors())
 
 const Provider = require('oidc-provider');
 
@@ -31,7 +31,12 @@ const configuration = {
       redirect_uris: ['https://alphanetrics.com/redirect'],
       // + other client properties
   }],
-  // scopes: ['api'],
+  scopes: ['api'],
+  claims: {
+    email: ['email', 'email_verified'],
+    phone: ['phone_number', 'phone_number_verified'],
+    profile: ['birthdate', 'family_name', 'gender', 'given_name', 'locale', 'middle_name', 'name', 'nickname', 'picture', 'preferred_username', 'profile', 'updated_at', 'website', 'zoneinfo']
+  }, 
   async findById(ctx, id) {
       return {
           accountId: id,
