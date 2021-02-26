@@ -38,7 +38,7 @@ const configuration = {
   }
 }
 
-const oidc = new Provider('https://api.alphanetrics.com', configuration);
+const oidc = new Provider('http://localhost:3001', configuration);
 
 
 
