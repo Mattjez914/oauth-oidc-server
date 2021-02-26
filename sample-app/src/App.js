@@ -14,7 +14,7 @@ const App = () => {
   );
 }
 
-let apiURL = 'https://api.alphanetrics.com/auth/auth'
+let apiURL = 'https://api.alphanetrics.com/auth'
 let redirectURL = 'https://alphanetrics.com/redirect'
 
 const startAuth = (event) => {

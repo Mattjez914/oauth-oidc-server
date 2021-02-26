@@ -44,17 +44,17 @@ const oidc = new Provider('http://localhost:3001', configuration);
 
 // app.use(express.static(path.join(__dirname, '..', '..', 'sample-app', 'build')));
 
-app.get('/test', (req, res) => {
-    res.send({message: 'This is a test change'})
-});
+// app.get('/test', (req, res) => {
+//     res.send({message: 'This is a test change'})
+// });
 
-app.use('/auth', oidc.callback);
+app.use('/', oidc.callback);
 
-app.get('*', (req, res) => {
-    res.status(404).json({
-        message: '404 page not found...',
-      });
-});
+// app.get('*', (req, res) => {
+//     res.status(404).json({
+//         message: '404 page not found...',
+//       });
+// });
 
   
 
