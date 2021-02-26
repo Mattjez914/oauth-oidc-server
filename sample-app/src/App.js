@@ -14,22 +14,12 @@ const App = () => {
   );
 }
 
-const startAuth = (event) => {
-  axios.get('https://api.alphanetrics.com/auth/auth', {
-    params: {
-      client_id: 'test_implicit_app',
-      redirect_uri: 'https://alphanetrics.com/redirect',
-      response_type: 'id_token',
-      scope: 'openid profile',
-      nonce: '123',
-      state: '321'
-    }
-  })
-  .then((res) => {
-    console.log(res)
-    window.location.href= res.data.url
+let apiURL = 'https://api.alphanetrics.com/auth/auth'
+let redirectURL = 'https://alphanetrics.com/redirect'
 
-  })
+const startAuth = (event) => {
+  let authURL = `${apiURL}?client_id=test_implicit_app&redirect_uri=${redirectURL}&response_type=id_token&scope=openid%20profile&nonce=123&state=321`
+  window.location.href= authURL
 }
 
 const AuthCallback = (props) => {
