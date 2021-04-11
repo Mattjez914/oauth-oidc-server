@@ -1,65 +1,100 @@
-const express = require('express');
+// const express = require('express');
 // const path = require('path');
-const	app	= express();
+// const	app	= express();
+// const cors = require('cors');
+const path = require('path');
 
-// app.use(require('cors')());
+module.exports = async function (app) {
+  app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'ejs');
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+  app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'https://test.com:3000');
+    // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+  // var whitelist = ['http://localhost:3000', 'https://alphanetrics.com']
+  // var corsOptions = {
+  //   origin: function (origin, callback) {
+  //     if (whitelist.indexOf(origin) !== -1) {
+  //       callback(null, true)
+  //     } else {
+  //       callback(new Error('Not allowed by CORS'))
+  //     }
+  //   }
+  // }
+  // app.use(cors(corsOptions));
+  // app.options(cors(corsOptions));
 
-app.options('*', cors())
+  let adapter;
 
-const Provider = require('oidc-provider');
-
-const configuration = {
-
-  features: {
-    introspection: { enabled: true },
-    revocation: { enabled: true },
-  },
-  formats: {
-    AccessToken: 'jwt',
-  },
-  clients: [{
-      client_id: 'test_implicit_app',
-      client_secret: 'bar',
-      // grant_types: ['implicit'],
-      // response_types: ['id_token'],
-      redirect_uris: ['https://alphanetrics.com/redirect'],
-      // + other client properties
-  }],
-  // scopes: ['api'],
-  async findById(ctx, id) {
-      return {
-          accountId: id,
-          async claims() { return { sub: id }; },
-      };
+  if (process.env.MONGODB_URI) {
+    adapter = require('./database/mongodb'); // eslint-disable-line global-require
+    await adapter.connect();
   }
+
+  const Provider = require('oidc-provider');
+
+  const configuration = require('./config/configuration');
+
+  const oidc = new Provider('http://localhost:3001', { adapter, ...configuration });
+
+  // app.use(express.static(path.join(__dirname, '..', '..', 'sample-app', 'build')));
+
+// app.get('/test', (req, res) => {
+//     res.send({message: 'This is a test change'})
+// });
+  require('./routes')(app, oidc);
+
+  app.use((req, res, next) => { 
+    // console.log(req.headers);
+    // console.log(res.getHeaders());
+    next();
+  }, oidc.callback);
+  
+  // app.get('*', (req, res) => {
+  //     res.status(404).json({
+  //         message: '404 page not found...',
+  //       });
+  // });
+
+  return app;
 }
 
-const oidc = new Provider('http://localhost:3001', configuration);
+
+// app.use(function(req, res, next) {
+//   res.header('Access-Control-Allow-Origin', 'https://test.com:3000');
+//   // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+
+// var whitelist = ['http://localhost:3000', 'https://alphanetrics.com']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
+// app.use(cors(corsOptions));
+// app.options(cors(corsOptions));
+
+// const Provider = require('oidc-provider');
+
+// const configuration = require('./config/configuration')
+
+// const oidc = new Provider('http://localhost:3001', configuration);
 
 
 
 // app.use(express.static(path.join(__dirname, '..', '..', 'sample-app', 'build')));
 
-app.get('/test', (req, res) => {
-    res.send({message: 'This is a test change'})
-});
-
-app.use('/auth', oidc.callback);
-
-app.get('*', (req, res) => {
-    res.status(404).json({
-        message: '404 page not found...',
-      });
-});
-
-  
+// app.get('/test', (req, res) => {
+//     res.send({message: 'This is a test change'})
+// });
 
 
 
-module.exports = app;
+// module.exports = app;

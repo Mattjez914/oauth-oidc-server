@@ -1,4 +1,6 @@
-const	app		= require("./src/app");
+"use strict";
+const express = require('express');
+const	app		= express();
 const http	= require("http");
 const env		= require("dotenv").config();
 
@@ -20,10 +22,20 @@ const port = normalizePort(env.parsed.PORT);
 
 app.set("port",port);
 
-const server = http.createServer(app);
+let server
 
-server.on("listening",() => {
-	console.log(`Authentication server is in ${env.parsed.ENVIRONMENT.toLowerCase()} mode and running on port ${env.parsed.PORT}...`)
+(async () => {
+	let initializedApp = await require('./src/app')(app);
+	server = http.createServer(initializedApp);
+
+	server.on("listening",() => {
+		console.log(`Authentication server is in ${env.parsed.ENVIRONMENT.toLowerCase()} mode and running on port ${env.parsed.PORT}...`)
+	});
+	
+	server.listen(port);
+})().catch((err) => {
+  if (server && server.listening) server.close();
+  console.error(err);
+  process.exitCode = 1;
 });
 
-server.listen(port);
