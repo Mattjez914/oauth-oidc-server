@@ -28,7 +28,7 @@ let client_id = REACT_APP_CLIENT_ID;
 // let client_id = 'csoep7TvdsHdutKXHUpHA';
 
 const startAuth = (event) => {
-  let authURL = `${apiURL}?client_id=${client_id}&redirect_uri=${redirectURL}&response_type=code%20id_token&scope=openid%20profile%20phone&nonce=123&state=321`
+  let authURL = `${apiURL}/auth?client_id=${client_id}&redirect_uri=${redirectURL}&response_type=code%20id_token&scope=openid%20profile%20phone&nonce=123&state=321`
   window.location.href= authURL
   // axios.get(apiURL, {
   //   params: {
@@ -58,7 +58,7 @@ const AuthCallback = (props) => {
   // let code = urlParams.get('code')
   console.log(code);
 
-  fetch(`http://localhost:3001/token`, {
+  fetch(`${apiURL}/token`, { // TODO change to actual DNS
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
