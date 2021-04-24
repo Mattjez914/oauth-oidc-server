@@ -117,7 +117,7 @@ module.exports = (app, provider) => {
       assert.equal(name, 'login');
       console.log(req.body.login);
       
-      const accountCollection = new adapter('Account').coll();
+      const accountCollection = new provider.Adapter('Account').coll();
       const account = await accountCollection.findOne( { _id: req.body.login, password: req.body.password });
       console.log(account);
 
