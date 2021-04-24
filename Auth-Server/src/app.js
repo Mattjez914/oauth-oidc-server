@@ -42,7 +42,7 @@ module.exports = async function (app) {
   const configuration = require('./config/configuration');
 
   const findAccount = async (ctx, id) => {
-    const accountCollection = new adapter('Account').coll();
+    const accountCollection = adapter.coll('account');
 
     const account = await accountCollection.findOne( { _id: id });
 
@@ -59,7 +59,7 @@ module.exports = async function (app) {
 // app.get('/test', (req, res) => {
 //     res.send({message: 'This is a test change'})
 // });
-  require('./routes')(app, oidc);
+  require('./routes')(app, oidc, adapter);
 
   app.use((req, res, next) => { 
     // console.log(req.headers);

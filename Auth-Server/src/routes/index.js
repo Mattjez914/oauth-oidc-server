@@ -20,7 +20,7 @@ const debug = (obj) => querystring.stringify(Object.entries(obj).reduce((acc, [k
   encodeURIComponent(value) { return keys.has(value) ? `<strong>${value}</strong>` : value; },
 });
 
-module.exports = (app, provider) => {
+module.exports = (app, provider, adapter) => {
   const { constructor: { errors: { SessionNotFound } } } = provider;
 
   app.use((req, res, next) => {
@@ -115,9 +115,10 @@ module.exports = (app, provider) => {
     try {
       const { prompt: { name } } = await provider.interactionDetails(req, res);
       assert.equal(name, 'login');
-      console.log(req.body.login);
+      console.log(req.body);
+      console.log(provider.Adapter)
       
-      const accountCollection = provider.Adapter.coll('account');
+      const accountCollection = adapter.coll('account');
       const account = await accountCollection.findOne( { _id: req.body.login, password: req.body.password });
       console.log(account);
 
