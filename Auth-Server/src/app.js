@@ -4,6 +4,10 @@
 // const cors = require('cors');
 const path = require('path');
 
+const findAccount = (adapter) => {
+  const account = new adapter('Account').coll();
+}
+
 module.exports = async function (app) {
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'ejs');
@@ -37,7 +41,18 @@ module.exports = async function (app) {
 
   const configuration = require('./config/configuration');
 
-  const oidc = new Provider(process.env.PROVIDER_URL, { adapter, ...configuration });
+  const findAccount = async (ctx, id) => {
+    const accountCollection = new adapter('Account').coll();
+
+    const account = await accountCollection.findOne( { _id: id });
+
+    return {
+      accountId: account._id,
+      async claims(use, scope) { return { sub: account._id } }
+    };
+  }
+
+  const oidc = new Provider(process.env.PROVIDER_URL, { adapter, findAccount, ...configuration });
 
   // app.use(express.static(path.join(__dirname, '..', '..', 'sample-app', 'build')));
 

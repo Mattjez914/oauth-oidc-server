@@ -115,7 +115,11 @@ module.exports = (app, provider) => {
     try {
       const { prompt: { name } } = await provider.interactionDetails(req, res);
       assert.equal(name, 'login');
-      const account = await Account.findByLogin(req.body.login);
+      console.log(req.body.login);
+      
+      const accountCollection = new adapter('Account').coll();
+      const account = await accountCollection.findOne( { _id: req.body.login, password: req.body.password });
+      console.log(account);
 
       const result = {
         select_account: {}, // make sure its skipped by the interaction policy since we just logged in
