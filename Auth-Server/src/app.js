@@ -1,7 +1,7 @@
 // const express = require('express');
 // const path = require('path');
 // const	app	= express();
-// const cors = require('cors');
+const cors = require('cors');
 const path = require('path');
 
 const findAccount = (adapter) => {
@@ -27,7 +27,7 @@ module.exports = async function (app) {
   //     }
   //   }
   // }
-  // app.use(cors(corsOptions));
+  app.use(cors());
   // app.options(cors(corsOptions));
 
   let adapter;
