@@ -15,7 +15,7 @@ export const saveState = (state) => {
         localStorage.setItem('state', serializedState);
     }
     catch (err) {
-        console.log('State failed to save:', err);
+        // console.log('State failed to save:', err);
     }
 }
 
@@ -24,6 +24,6 @@ export const clearState = () => {
         localStorage.removeItem('state');
     }
     catch (err) {
-        console.log('State failed to clear', err);
+        // console.log('State failed to clear', err);
     }
 }

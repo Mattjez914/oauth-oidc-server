@@ -22,7 +22,7 @@ store.subscribe(() => {
     console.log('Current token:',currentState.token);
     if (currentState.token && currentState.token !== previousState.token) {
         console.log('token saved');
-        saveState({ token: currentState.token });
+        saveState({ token: currentState.token, clientDetails: currentState.clientDetails});
     }
 })
 

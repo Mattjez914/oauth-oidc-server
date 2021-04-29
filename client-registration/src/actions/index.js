@@ -28,16 +28,46 @@ export const submitLogin = () => {
 export const userLogin = (creds) => async (dispatch) => {
     let clientId = creds.username;
     let token = creds.password;
+    let error = null;
     const response = await fetch(`https://api.alphanetrics.com/reg/${clientId}`, {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`
         }
-    }).then(res => res.json());
+    }).then(res => {
+        error = res.ok ? null : res.status;
+        console.log('error: ', error);
+        return res.json();
+    });
 
     console.log(response);
 
-    dispatch({ type: 'USER_LOGIN', payload: response.registration_access_token});
+    if (error) {
+        let errorObject = {};
+        switch(error) {
+            case 401:
+                errorObject = {
+                    statusCode: error,
+                    message: 'The client id and registration access token combination are incorrect'
+                };
+                break;
+            case 404:
+                errorObject = {
+                    statusCode: error,
+                    message: 'Please enter a valid client id before submitting'
+                }
+                break;
+            default:
+                errorObject = {
+                    statusCode: error,
+                    message: 'Failed to log in. Please try again.'
+                }
+        }
+        dispatch({ type: 'LOGIN_ERROR', payload: errorObject});
+    } else {
+        dispatch({ type: 'USER_LOGIN', payload: response});
+    }
+    
 };
 
 export const userLogout = () => {

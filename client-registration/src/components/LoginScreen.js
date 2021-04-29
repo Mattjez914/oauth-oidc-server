@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import { userLogin, submitLogin } from '../actions';
 
@@ -20,10 +21,10 @@ const LoginScreen = (props) => {
     }
 
     const errorMessage = () => {
-        if (props.error === 401) {
+        if (props.error) {
             return (
                 <div style={errorText}>
-                    Username and password combination not recognized. Please try again.
+                    {props.error.message}
                 </div>
             )
         }
@@ -36,19 +37,24 @@ const LoginScreen = (props) => {
                 <h5 className="card-title">Login</h5>
                 <form>
                   <div className="form-group">
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">Client Id</label>
                     <input type="text" className="form-control" id="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Registration Access Token</label>
                     <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                     {errorMessage()}
                   </div>
                   <button type="submit" className="btn btn-primary" onClick={(e) => onLoginSubmit(e)}>Submit</button>
+                  <Link to="/signup" className="btn btn-success">Sign up</Link>
                 </form>
             </div>
         </div>
     );
 }
 
-export default connect(null, {userLogin, submitLogin})(LoginScreen);
+const mapStateToProps = (state) => {
+    return { error: state.loginError };
+}
+
+export default connect(mapStateToProps, {userLogin, submitLogin})(LoginScreen);

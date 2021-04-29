@@ -21,7 +21,7 @@ const selectedSongReducer = (selectedSong=null, action) => {
 const userLoginReducer = (token=null, action) => {
     switch (action.type) {
         case 'USER_LOGIN':
-            return action.payload;
+            return action.payload.registration_access_token;
         case 'USER_LOGOUT':
             clearState();
             return action.payload;
@@ -35,9 +35,32 @@ const loginFormReducer = (loginSubmitted=false, action) => {
         case 'LOGIN_SUBMITTED':
             return action.payload;
         case 'USER_LOGOUT':
+        case 'LOGIN_ERROR':
             return false;
         default:
             return loginSubmitted;   
+    }
+};
+
+const loginErrorReducer = (error=null, action) => {
+    switch (action.type) {
+        case 'USER_LOGIN':
+            return null;
+        case 'LOGIN_ERROR':
+            return action.payload;
+        default:
+            return error       
+    }
+};
+
+const clientRegistrationReducer = (details=null, action) => {
+    switch (action.type) {
+        case 'USER_LOGIN':
+            return JSON.stringify(action.payload, null, 2);
+        case 'USER_LOGOUT':
+            return null;
+        default:
+            return details       
     }
 };
 
@@ -46,5 +69,7 @@ export default combineReducers({
     songs: songsReducer,
     selectedSong: selectedSongReducer,
     token: userLoginReducer,
-    loginSubmitted: loginFormReducer
+    loginSubmitted: loginFormReducer,
+    loginError: loginErrorReducer,
+    clientDetails: clientRegistrationReducer,
 });
