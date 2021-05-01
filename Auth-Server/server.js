@@ -2,6 +2,7 @@
 const express = require('express');
 const	app		= express();
 const http	= require("http");
+const path = require('path');
 const env		= require("dotenv").config();
 
 const normalizePort = (val) => {
@@ -20,12 +21,31 @@ const normalizePort = (val) => {
 
 const port = normalizePort(env.parsed.PORT);
 
+const staticPath = path.resolve(__dirname, '../client-registration/build');
+console.log('CURRENT DIRECTORY: ',path.resolve(staticPath, './index.html'));
+
 app.set("port",port);
+
+app.use(express.static(staticPath));
+
+// app.get("/register", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, '../client-registration/build/index.html'));
+// });
+
+// app.use(express.static(path.join(__dirname, "build")));
+
+app.get("/register", (req, res) => {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 let server
 
 (async () => {
 	let initializedApp = await require('./src/app')(app);
+	initializedApp.get("*", (req, res) => {
+    res.sendFile(path.resolve(staticPath, './index.html'));
+	});
+	
 	server = http.createServer(initializedApp);
 
 	server.on("listening",() => {

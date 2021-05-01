@@ -7,30 +7,6 @@ import ClientPortal from './ClientPortal';
 import { userLogout } from '../actions';
 
 class App extends React.Component {
-    // state = { error: null};
-
-    // onLoginSubmit = async (username, password) => {
-    //     // console.log(username,password);
-    //     this.setState({formSubmitted: true});
-    //     // setTimeout(() => this.setState({login: true}), 4000);
-    //     let response;
-    //     try {
-    //         response = await axios.post('http://localhost:3001/api/login',{}, {
-    //             auth: {
-    //                 username: username,
-    //                 password: password
-    //             }
-    //         });
-    //         console.log(response);
-    //         this.setState({login: true});
-    //     }
-    //     catch (err) {
-    //         let errorStatus = err.response.status;
-    //         console.log(errorStatus);
-    //         if (errorStatus === 401) this.setState({login: false, formSubmitted: false, error: errorStatus})
-    //     }
-    // }
-
     
     renderContent() {
         // console.log('State login:',this.props.login)
