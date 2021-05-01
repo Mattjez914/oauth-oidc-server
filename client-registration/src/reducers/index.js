@@ -56,6 +56,7 @@ const loginErrorReducer = (error=null, action) => {
 const clientRegistrationReducer = (details=null, action) => {
     switch (action.type) {
         case 'USER_LOGIN':
+        case 'CHANGE_REDIRECT':
             return JSON.stringify(action.payload, null, 2);
         case 'USER_LOGOUT':
             return null;

@@ -36,11 +36,8 @@ export const userLogin = (creds) => async (dispatch) => {
         }
     }).then(res => {
         error = res.ok ? null : res.status;
-        console.log('error: ', error);
         return res.json();
     });
-
-    console.log(response);
 
     if (error) {
         let errorObject = {};
@@ -77,4 +74,10 @@ export const userLogout = () => {
     }
 }
 
+export const updateClientRedirect = (response) => {
+    return {
+        type: 'CHANGE_REDIRECT',
+        payload: response
+    }
+}
 

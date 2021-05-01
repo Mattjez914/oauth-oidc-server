@@ -15,12 +15,12 @@ let currentState;
 store.subscribe(() => {
     let previousState = currentState;
     if (!previousState) {
-        previousState = { token: null };
+        previousState = { token: null, clientDetails: null };
     } 
     console.log('Previous token:',previousState.token);
     currentState = store.getState();
     console.log('Current token:',currentState.token);
-    if (currentState.token && currentState.token !== previousState.token) {
+    if ((currentState.token && currentState.token !== previousState.token) || (currentState.clientDetails && currentState.clientDetails !== previousState.clientDetails)) {
         console.log('token saved');
         saveState({ token: currentState.token, clientDetails: currentState.clientDetails});
     }

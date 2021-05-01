@@ -9,7 +9,6 @@ const Signup = (props) => {
   const [downloadLink, setDownloadLink] = useState('');
 
   const onLoginSubmit = async (event) => {
-    console.log(redirectURL)
     event.preventDefault();
     const response = await fetch(`https://api.alphanetrics.com/reg`, {
       method: 'POST',
@@ -27,8 +26,6 @@ const Signup = (props) => {
       setResponseError(res.ok ? null : res.statusText);
       return res.json();
     })
-
-    console.log(response);
 
     let jsonResponse = JSON.stringify(response, null, 2)
     setRegisteredClient(jsonResponse);
