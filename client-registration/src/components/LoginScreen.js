@@ -34,7 +34,7 @@ const LoginScreen = (props) => {
     return (
         <div className="card">
             <div className="card-body">
-                <h5 className="card-title">Login</h5>
+                <h2 className="card-title">Login</h2>
                 <form>
                   <div className="form-group">
                     <label htmlFor="username">Client Id</label>

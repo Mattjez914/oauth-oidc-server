@@ -28,12 +28,6 @@ app.set("port",port);
 
 app.use(express.static(staticPath));
 
-// app.get("/register", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, '../client-registration/build/index.html'));
-// });
-
-// app.use(express.static(path.join(__dirname, "build")));
-
 app.get("/register", (req, res) => {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 });
